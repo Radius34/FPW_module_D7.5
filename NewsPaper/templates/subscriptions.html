@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Подписки на рассылки</h1>
+<form method="POST" action="{% url 'subscription' %}">
+  {% csrf_token %}
+  {% for category in categories %}
+  <div>
+    <input type="checkbox" id="{{ category.id }}" name="category_id" value="{{ category.id }}"
+           {% if category in subscribed_categories %}
+           checked
+           {% endif %}>
+    <label for="{{ category.id }}">{{ category.name }}</label>
+  </div>
+  {% endfor %}
+  <div>
+    <button type="submit" name="action" value="subscribe">Подписаться</button>
+    <button type="submit" name="action" value="unsubscribe">Отписаться</button>
+  </div>
+</form>
+{% endblock %}
